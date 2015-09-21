@@ -36,7 +36,7 @@ options(
                   'BaseNodeI2cHandler<Handler>',
                   'BaseNodeConfig<ConfigMessage, Address>',
                   'BaseNodeState<StateMessage>'],
-    rpc_classes=['rpc_project_template::Node'],
+    rpc_classes=['dropbot_dx::Node'],
     DEFAULT_ARDUINO_BOARDS=DEFAULT_ARDUINO_BOARDS,
     setup=dict(name=PROJECT_PREFIX.replace('_', '-'),
                version=VERSION,
