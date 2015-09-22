@@ -18,7 +18,6 @@ build/*
 */protobuf/py
 */protobuf/*.proto
 .sconsign.dblite
-arduino_rpc/protobuf_commands.py
 .ipynb_checkpoints
 */node.py
 */config.py
