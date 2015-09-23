@@ -121,14 +121,18 @@ public:
   }
 
   bool on_state_magnet_engaged_changed(bool new_value) {
+    /* Update magnet position based on updated setting. */
     if (new_value) { magnet_engage(); }
     else { magnet_disengage(); }
+    // Trigger update of `magnet_engaged` field in local state structure.
     return true;
   }
 
   bool on_state_light_enabled_changed(bool new_value) {
-    if (new_value) { magnet_engage(); }
-    else { magnet_disengage(); }
+    /* Update state of light output based on updated setting. */
+    if (new_value) { light_enable(); }
+    else { light_disable(); }
+    // Trigger update of `light_enabled` field in local state structure.
     return true;
   }
 };

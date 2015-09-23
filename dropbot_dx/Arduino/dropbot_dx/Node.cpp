@@ -11,6 +11,7 @@ void Node::begin() {
   servo_.attach(SERVO_PIN);
   state_.set_buffer(get_buffer());
   state_.validator_.set_node(*this);
+  state_.reset();
   // Start Serial after loading config to set baud rate.
 #if !defined(DISABLE_SERIAL)
   Serial.begin(config_._.baud_rate);
