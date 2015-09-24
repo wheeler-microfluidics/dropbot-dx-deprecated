@@ -54,8 +54,6 @@ public:
   uint32_t tick_count_;
   int32_t target_position_;
   Servo servo_;
-  static const uint8_t SERVO_PIN = 9;
-  static const uint8_t SWITCH_PIN = 10;
 
   Node() : BaseNode(), BaseNodeConfig<config_t>(dropbot_dx_Config_fields),
            BaseNodeState<state_t>(dropbot_dx_State_fields) {}

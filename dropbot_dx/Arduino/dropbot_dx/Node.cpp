@@ -7,8 +7,7 @@ void Node::begin() {
   config_.validator_.set_node(*this);
   config_.reset();
   config_.load();
-  pinMode(SWITCH_PIN, INPUT);
-  servo_.attach(SERVO_PIN);
+  servo_.attach(config_._.servo_pin);
   state_.set_buffer(get_buffer());
   state_.validator_.set_node(*this);
   state_.reset();
