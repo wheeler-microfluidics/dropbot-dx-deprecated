@@ -94,8 +94,9 @@ public:
   void magnet_disengage() { servo_.write(config_._.disengaged_angle); }
 
   bool light_override() {
-      return (config_._.light_override_enabled &&
-              digitalRead(config_._.light_override_pin));
+    pinMode(config_._.light_override_pin, INPUT);
+    return (config_._.light_override_enabled &&
+            digitalRead(config_._.light_override_pin));
   }
   bool light_enabled() { return digitalRead(config_._.light_pin); }
   void light_enable() {

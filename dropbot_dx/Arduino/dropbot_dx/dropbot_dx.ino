@@ -39,4 +39,5 @@ void loop() {
   if (node_obj.i2c_handler_.packet_ready()) {
     node_obj.i2c_handler_.process_packet(command_processor);
   }
+  node_obj.loop();
 }
