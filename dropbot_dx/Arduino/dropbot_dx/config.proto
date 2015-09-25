@@ -25,6 +25,10 @@ message Config {
   optional uint32 disengaged_angle = 51 [default = 103];
   optional uint32 light_pin = 52 [default = 8];
   optional uint32 servo_pin = 53 [default = 7];
+  // If light override pin is high, and `light_override_enabled`, light will be
+  // turned off regardless of the `light_enabled` state setting.
+  optional uint32 light_override_pin = 54 [default = 6];
+  optional bool light_override_enabled = 55 [default = false];
 }
 
 

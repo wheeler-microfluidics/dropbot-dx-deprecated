@@ -93,6 +93,10 @@ public:
   void magnet_engage() { servo_.write(config_._.engaged_angle); }
   void magnet_disengage() { servo_.write(config_._.disengaged_angle); }
 
+  bool light_override() {
+      return (config_._.light_override_enabled &&
+              digitalRead(config_._.light_override_pin));
+  }
   bool light_enabled() { return digitalRead(config_._.light_pin); }
   void light_enable() {
     const uint8_t pin = config_._.light_pin;
@@ -111,9 +115,12 @@ public:
     } else if (!state_._.magnet_engaged && magnet_engaged()) {
       magnet_disengage();
     }
-    if (state_._.light_enabled && !light_enabled()) {
+    // If light override is active, light will be turned off regardless of the
+    // `light_enabled` state setting.
+    if (state_._.light_enabled && !light_override() && !light_enabled()) {
       light_enable();
-    } else if (!state_._.light_enabled && light_enabled()) {
+    } else if ((!state_._.light_enabled || light_override()) &&
+               light_enabled()) {
       light_disable();
     }
   }
