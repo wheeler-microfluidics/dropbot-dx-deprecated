@@ -4,15 +4,19 @@
 #include <stdint.h>
 #include <Arduino.h>
 #include <Servo.h>
+#include <Wire.h>
+#include <EEPROM.h>
 #include <NadaMQ.h>
-#include <BaseNodeRpc/BaseNodeRpc.h>
+#include <CArrayDefs.h>
+#include "RPCBuffer.h"  // Define packet sizes
+#include "DropbotDx/Properties.h"  // Define package name, URL, etc.
+#include <BaseNodeRpc/BaseNode.h>
 #include <BaseNodeRpc/BaseNodeEeprom.h>
 #include <BaseNodeRpc/BaseNodeI2c.h>
 #include <BaseNodeRpc/BaseNodeConfig.h>
 #include <BaseNodeRpc/BaseNodeState.h>
 #include <BaseNodeRpc/BaseNodeSerialHandler.h>
 #include <BaseNodeRpc/BaseNodeI2cHandler.h>
-#include <Array.h>
 #include <BaseNodeRpc/I2cHandler.h>
 #include <BaseNodeRpc/SerialHandler.h>
 #include <pb_validate.h>
@@ -58,7 +62,7 @@ public:
   Node() : BaseNode(), BaseNodeConfig<config_t>(dropbot_dx_Config_fields),
            BaseNodeState<state_t>(dropbot_dx_State_fields) {}
 
-  UInt8Array get_buffer() { return UInt8Array(sizeof(buffer_), buffer_); }
+  UInt8Array get_buffer() { return UInt8Array_init(sizeof(buffer_), buffer_); }
   /* This is a required method to provide a temporary buffer to the
    * `BaseNode...` classes. */
 

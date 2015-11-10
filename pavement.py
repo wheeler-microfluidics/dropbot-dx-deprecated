@@ -22,14 +22,25 @@ package_name = name
 rpc_module = import_module(PROJECT_PREFIX)
 VERSION = version.getVersion()
 URL='http://github.com/wheeler-microfluidics/%s.git' % name
-PROPERTIES = OrderedDict([('name', PROJECT_PREFIX),
+PROPERTIES = OrderedDict([('package_name', PROJECT_PREFIX),
+                          ('display_name', PROJECT_PREFIX),
                           ('manufacturer', 'Wheeler Lab'),
                           ('software_version', VERSION),
                           ('url', URL)])
+LIB_PROPERTIES = PROPERTIES.copy()
+LIB_PROPERTIES.update(OrderedDict([('author', 'Christian Fobel'),
+                                   ('author_email', 'christian@fobel.net'),
+                                   ('short_description', 'Control firmware and'
+                                    ' driver for Dropbot-DX.'),
+                                   ('version', VERSION),
+                                   ('long_description', ''),
+                                   ('category', 'Communication'),
+                                   ('architectures', 'avr')]))
 
 options(
     rpc_module=rpc_module,
     PROPERTIES=PROPERTIES,
+    LIB_PROPERTIES=LIB_PROPERTIES,
     base_classes=['BaseNodeSerialHandler',
                   'BaseNodeEeprom',
                   'BaseNodeI2c',
@@ -40,12 +51,12 @@ options(
     DEFAULT_ARDUINO_BOARDS=DEFAULT_ARDUINO_BOARDS,
     setup=dict(name=PROJECT_PREFIX.replace('_', '-'),
                version=VERSION,
-               description='Arduino RPC node packaged as Python package.',
-               author='Christian Fobel',
-               author_email='christian@fobel.net',
+               description=LIB_PROPERTIES['short_description'],
+               author=LIB_PROPERTIES['author'],
+               author_email=LIB_PROPERTIES['author_email'],
                url=URL,
                license='GPLv2',
-               install_requires=['base_node_rpc>=0.11post17',
-                                 'arduino_helpers>=0.3post10'],
+               install_requires=['base_node_rpc>=0.12post12',
+                                 'arduino_helpers>=0.3post15'],
                include_package_data=True,
                packages=[str(PROJECT_PREFIX)]))

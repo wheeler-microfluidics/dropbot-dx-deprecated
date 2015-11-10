@@ -7,7 +7,7 @@ try:
     from .config import Config, State
 except (ImportError, TypeError):
     pass
-from proxy import Proxy, I2cProxy
+from proxy import Proxy, I2cProxy, SerialProxy
 
 
 def package_path():
@@ -40,7 +40,8 @@ def get_includes():
         ...
 
     '''
-    return ([get_sketch_directory(), get_lib_directory()] +
+    return ([get_sketch_directory()] +
+            list(get_lib_directory().walkdirs('src')) +
             base_node_rpc.get_includes())
 
 

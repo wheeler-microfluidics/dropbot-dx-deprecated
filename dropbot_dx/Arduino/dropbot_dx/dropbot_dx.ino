@@ -4,12 +4,14 @@
 #include "Wire.h"
 #include "Servo.h"
 #include "Memory.h"
+#include "ArduinoRpc.h"
 #include "nanopb.h"
 #include "NadaMQ.h"
-#include "Array.h"
+#include "CArrayDefs.h"
 #include "RPCBuffer.h"
-#include "DropbotDx/CommandProcessor.h"
 #include "NodeCommandProcessor.h"
+#include "BaseNodeRpc.h"
+#include "DropbotDx.h"
 #include "Node.h"
 
 

@@ -1,5 +1,7 @@
+from path_helpers import path
 try:
-    from .node import Proxy as _Proxy, I2cProxy as _I2cProxy
+    from .node import (Proxy as _Proxy, I2cProxy as _I2cProxy,
+                       SerialProxy as _SerialProxy)
 
     class ProxyMixin(object):
         '''
@@ -86,6 +88,10 @@ try:
     class I2cProxy(ProxyMixin, _I2cProxy):
         pass
 
+    class SerialProxy(ProxyMixin, _SerialProxy):
+        pass
+
 except (ImportError, TypeError):
     Proxy = None
     I2cProxy = None
+    SerialProxy = None
