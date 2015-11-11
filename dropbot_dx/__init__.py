@@ -68,9 +68,3 @@ def get_firmwares():
                                           board_dir.walkfiles('*.hex')])
                         for board_dir in
                         package_path().joinpath('firmware').dirs()])
-
-
-def connect(**kwargs):
-    from base_node_rpc.proxy import connect
-
-    return connect(Proxy, name=package_path().name, **kwargs)

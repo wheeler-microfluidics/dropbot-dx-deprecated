@@ -1,12 +1,12 @@
 from nose.tools import ok_, eq_, nottest
-import dropbot_dx as dx
+from dropbot_dx import SerialProxy 
 
 
 def test_state_update():
     '''
     Test setting state fields through `update_state` method.
     '''
-    proxy = dx.connect()
+    proxy = SerialProxy() 
 
     states = [(light, magnet) for light in [True, False]
               for magnet in [True, False]]
