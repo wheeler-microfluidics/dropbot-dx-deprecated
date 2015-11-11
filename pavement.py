@@ -56,7 +56,7 @@ options(
                author_email=LIB_PROPERTIES['author_email'],
                url=URL,
                license='GPLv2',
-               install_requires=['base_node_rpc>=0.12post12',
+               install_requires=['base_node_rpc>=0.12post13',
                                  'arduino_helpers>=0.3post15'],
                include_package_data=True,
                packages=[str(PROJECT_PREFIX)]))
