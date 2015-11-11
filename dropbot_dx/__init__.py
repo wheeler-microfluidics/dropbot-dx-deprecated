@@ -4,6 +4,7 @@ from path_helpers import path
 try:
     import nadamq
     import base_node_rpc
+    import arduino_servo
     from .config import Config, State
 except (ImportError, TypeError):
     pass
@@ -42,7 +43,8 @@ def get_includes():
     '''
     return ([get_sketch_directory()] +
             list(get_lib_directory().walkdirs('src')) +
-            base_node_rpc.get_includes())
+            base_node_rpc.get_includes() +
+            arduino_servo.get_includes())
 
 
 def get_sources():
@@ -52,7 +54,8 @@ def get_sources():
     '''
     return (get_sketch_directory().files('*.c*') +
             list(get_lib_directory().walkfiles('*.c*')) +
-            base_node_rpc.get_sources())
+            base_node_rpc.get_sources() +
+            arduino_servo.get_sources())
 
 
 def get_firmwares():
