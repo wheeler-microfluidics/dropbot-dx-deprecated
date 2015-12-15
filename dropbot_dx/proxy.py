@@ -10,6 +10,8 @@ try:
 
         For example, expose config and state getters/setters as attributes.
         '''
+        host_package_name = str(path(__file__).parent.name.replace('_', '-'))
+
         @property
         def config(self):
             from .config import Config
@@ -31,10 +33,29 @@ try:
             return self.update_state(value)
 
         def update_config(self, **kwargs):
+            '''
+            Update fields in the config object based on keyword arguments.
+
+            By default, these values will be saved to EEPROM. To prevent this
+            (e.g., to verify system behavior before committing the changes),
+            you can pass the special keyword argument 'save=False'. In this case,
+            you will need to call the method save_config() to make your changes
+            persistent.
+            '''
+
             from .config import Config
 
+            save = True
+            if 'save' in kwargs.keys() and not kwargs.pop('save'):
+                save = False
+
             config = Config(**kwargs)
-            return super(ProxyMixin, self).update_config(config)
+            return_code = super(ProxyMixin, self).update_config(config)
+
+            if save:
+                super(ProxyMixin, self).save_config()
+
+            return return_code
 
         def update_state(self, **kwargs):
             from .config import State

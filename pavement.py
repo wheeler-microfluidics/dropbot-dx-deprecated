@@ -22,7 +22,8 @@ package_name = name
 rpc_module = import_module(PROJECT_PREFIX)
 VERSION = version.getVersion()
 URL='http://github.com/wheeler-microfluidics/%s.git' % name
-PROPERTIES = OrderedDict([('package_name', PROJECT_PREFIX),
+package_name = PROJECT_PREFIX.replace('_', '-')
+PROPERTIES = OrderedDict([('package_name', package_name),
                           ('display_name', PROJECT_PREFIX),
                           ('manufacturer', 'Wheeler Lab'),
                           ('software_version', VERSION),
