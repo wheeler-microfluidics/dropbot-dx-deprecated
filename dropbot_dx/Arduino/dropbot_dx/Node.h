@@ -118,6 +118,12 @@ public:
     }
   }
 
+  bool on_config_light_pin_changed(uint32_t new_value) {
+    // Configure light pin as output.
+    pinMode(new_value, OUTPUT);
+    return true;
+  }
+
   bool on_state_magnet_engaged_changed(bool new_value) {
     /* Update magnet position based on updated setting. */
     if (new_value) { _magnet_engage(); }
