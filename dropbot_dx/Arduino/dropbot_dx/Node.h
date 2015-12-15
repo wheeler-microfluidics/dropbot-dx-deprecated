@@ -94,8 +94,6 @@ public:
   void servo_attach(uint8_t servo_pin) { servo_.attach(servo_pin); }
 
   bool magnet_engaged() { return servo_.read() == config_._.engaged_angle; }
-  void magnet_engage() { servo_.write(config_._.engaged_angle); }
-  void magnet_disengage() { servo_.write(config_._.disengaged_angle); }
 
   bool light_override() {
     pinMode(config_._.light_override_pin, INPUT);
@@ -103,48 +101,46 @@ public:
             digitalRead(config_._.light_override_pin));
   }
   bool light_enabled() { return digitalRead(config_._.light_pin); }
-  void light_enable() {
-    const uint8_t pin = config_._.light_pin;
-    pinMode(pin, OUTPUT);
-    digitalWrite(pin, HIGH);
-  }
-  void light_disable() {
-    const uint8_t pin = config_._.light_pin;
-    pinMode(pin, OUTPUT);
-    digitalWrite(pin, LOW);
-  }
 
   void loop() {
     if (state_._.magnet_engaged && !magnet_engaged()) {
-      magnet_engage();
+      _magnet_engage();
     } else if (!state_._.magnet_engaged && magnet_engaged()) {
-      magnet_disengage();
+      _magnet_disengage();
     }
     // If light override is active, light will be turned off regardless of the
     // `light_enabled` state setting.
     if (state_._.light_enabled && !light_override() && !light_enabled()) {
-      light_enable();
+      _light_enable();
     } else if ((!state_._.light_enabled || light_override()) &&
                light_enabled()) {
-      light_disable();
+      _light_disable();
     }
   }
 
   bool on_state_magnet_engaged_changed(bool new_value) {
     /* Update magnet position based on updated setting. */
-    if (new_value) { magnet_engage(); }
-    else { magnet_disengage(); }
+    if (new_value) { _magnet_engage(); }
+    else { _magnet_disengage(); }
     // Trigger update of `magnet_engaged` field in local state structure.
     return true;
   }
 
   bool on_state_light_enabled_changed(bool new_value) {
     /* Update state of light output based on updated setting. */
-    if (new_value) { light_enable(); }
-    else { light_disable(); }
+    if (new_value) { _light_enable(); }
+    else { _light_disable(); }
     // Trigger update of `light_enabled` field in local state structure.
     return true;
   }
+
+  // Local methods
+  // TODO: Should likely be private, but need to add private handling to code
+  // scraper/generator.
+  void _magnet_engage() { servo_.write(config_._.engaged_angle); }
+  void _magnet_disengage() { servo_.write(config_._.disengaged_angle); }
+  void _light_enable() { digitalWrite(config_._.light_pin, HIGH); }
+  void _light_disable() { digitalWrite(config_._.light_pin, LOW); }
 };
 
 }  // namespace dropbot_dx
