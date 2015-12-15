@@ -63,6 +63,10 @@ try:
             state = State(**kwargs)
             return super(ProxyMixin, self).update_state(state)
 
+        def __del__(self):
+            self.update_state(light_enabled=False, magnet_engaged=False)
+            super(ProxyMixin, self).__del__()
+
 
     class Proxy(ProxyMixin, _Proxy):
         pass
