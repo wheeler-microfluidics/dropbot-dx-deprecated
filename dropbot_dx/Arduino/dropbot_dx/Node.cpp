@@ -11,6 +11,12 @@ void Node::begin() {
   state_.set_buffer(get_buffer());
   state_.validator_.set_node(*this);
   state_.reset();
+  // Mark light enabled and magnet engaged state for validation.
+  state_._.has_light_enabled = true;
+  state_._.has_magnet_engaged = true;
+  // Validate state to trigger on-changed handling for state fields that are
+  // set.
+  state_.validate();
   // Start Serial after loading config to set baud rate.
 #if !defined(DISABLE_SERIAL)
   Serial.begin(config_._.baud_rate);
