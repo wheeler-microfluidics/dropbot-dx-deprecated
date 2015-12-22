@@ -57,7 +57,7 @@ options(
                author_email=LIB_PROPERTIES['author_email'],
                url=URL,
                license='GPLv2',
-               install_requires=['base_node_rpc>=0.12.post20',
+               install_requires=['base_node_rpc>=0.12.post23',
                                  'arduino-servo'],
                include_package_data=True,
                packages=[str(PROJECT_PREFIX)]))
