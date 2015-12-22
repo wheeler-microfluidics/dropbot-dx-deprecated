@@ -24,3 +24,5 @@ build/*
 *~
 *.swp
 dropbot_dx/Arduino/dropbot_dx/NodeCommandProcessor.h
+.project
+.pydevproject
