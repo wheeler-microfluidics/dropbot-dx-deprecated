@@ -1,10 +1,12 @@
 from path_helpers import path
-from arduino_rpc.protobuf import resolve_field_values
 
 
 try:
+    from arduino_rpc.protobuf import resolve_field_values
+    
     from .node import (Proxy as _Proxy, I2cProxy as _I2cProxy,
                        SerialProxy as _SerialProxy)
+    from .config import Config, State
 
     class ProxyMixin(object):
         '''
@@ -17,8 +19,6 @@ try:
 
         @property
         def _config_pb(self):
-            from .config import Config
-
             return Config.FromString(self.serialize_config().tostring())
         
         @property
@@ -36,8 +36,6 @@ try:
         
         @property
         def _state_pb(self):
-            from .config import State
-
             return State.FromString(self.serialize_state().tostring())
 
         @property
@@ -64,9 +62,6 @@ try:
             you will need to call the method save_config() to make your changes
             persistent.
             '''
- 
-            from .config import Config
-
             save = True
             if 'save' in kwargs.keys() and not kwargs.pop('save'):
                 save = False
@@ -82,8 +77,6 @@ try:
             return return_code
 
         def update_state(self, **kwargs):
-            from .config import State
-
             state = State(**kwargs)
             return super(ProxyMixin, self).update_state(state)
 
