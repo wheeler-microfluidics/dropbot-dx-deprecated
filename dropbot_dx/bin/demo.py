@@ -11,17 +11,20 @@ if __name__ == '__main__':
 
     proxy = SerialProxy()
 
+    print '# Properties #\n'
+    print proxy.properties
+
+    print '\n' + (72 * '-') + '\n'
+
     print '# Config #\n'
-    print resolve_field_values(proxy.config, set_default=True)[['full_name',
-                                                                'value']]
+    print proxy.config
 
     print '\n' + (72 * '-') + '\n'
 
     # Turn on light and move magnet to engaged position.
     proxy.update_state(magnet_engaged=True, light_enabled=True)
     print '# State #\n'
-    print resolve_field_values(proxy.state, set_default=True)[['full_name',
-                                                            'value']]
+    print proxy.state
 
     print '\n'
 
