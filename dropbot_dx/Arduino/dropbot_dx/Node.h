@@ -10,6 +10,7 @@
 #include <CArrayDefs.h>
 #include "RPCBuffer.h"  // Define packet sizes
 #include "DropbotDx/Properties.h"  // Define package name, URL, etc.
+#include <BaseNodeRpc/Properties.h>
 #include <BaseNodeRpc/BaseNode.h>
 #include <BaseNodeRpc/BaseNodeEeprom.h>
 #include <BaseNodeRpc/BaseNodeI2c.h>
