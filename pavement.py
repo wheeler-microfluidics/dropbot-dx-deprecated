@@ -24,7 +24,7 @@ VERSION = version.getVersion()
 URL='http://github.com/wheeler-microfluidics/%s.git' % name
 package_name = PROJECT_PREFIX.replace('_', '-')
 PROPERTIES = OrderedDict([('package_name', package_name),
-                          ('display_name', PROJECT_PREFIX),
+                          ('display_name', 'DropBot DX'),
                           ('manufacturer', 'Wheeler Lab'),
                           ('software_version', VERSION),
                           ('url', URL)])
@@ -32,7 +32,7 @@ LIB_PROPERTIES = PROPERTIES.copy()
 LIB_PROPERTIES.update(OrderedDict([('author', 'Christian Fobel'),
                                    ('author_email', 'christian@fobel.net'),
                                    ('short_description', 'Control firmware and'
-                                    ' driver for Dropbot-DX.'),
+                                    ' driver for DropBot DX.'),
                                    ('version', VERSION),
                                    ('long_description', ''),
                                    ('category', 'Communication'),
