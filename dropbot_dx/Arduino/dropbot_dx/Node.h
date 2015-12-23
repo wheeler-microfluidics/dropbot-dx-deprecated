@@ -54,6 +54,12 @@ public:
 
   static const uint16_t BUFFER_SIZE = 128;  // >= longest property string
 
+  // If light override pin is high, and `light_override_enabled`, light will be
+  // turned off regardless of the `light_enabled` state setting.
+  static const uint8_t LIGHT_OVERRIDE_PIN = 6;
+  static const uint8_t SERVO_PIN = 7;
+  static const uint8_t LIGHT_PIN = 8;
+
   uint8_t buffer_[BUFFER_SIZE];
   uint32_t tick_count_;
   int32_t target_position_;
@@ -90,17 +96,14 @@ public:
   void servo_write(uint8_t angle) { servo_.write(angle); }
   void servo_write_microseconds(uint16_t us) { servo_.writeMicroseconds(us); }
   bool servo_attached() { return servo_.attached(); }
-  void servo_detach() { servo_.detach(); }
-  void servo_attach(uint8_t servo_pin) { servo_.attach(servo_pin); }
 
   bool magnet_engaged() { return servo_.read() == config_._.engaged_angle; }
 
   bool light_override() {
-    pinMode(config_._.light_override_pin, INPUT);
     return (config_._.light_override_enabled &&
-            digitalRead(config_._.light_override_pin));
+            digitalRead(LIGHT_OVERRIDE_PIN));
   }
-  bool light_enabled() { return digitalRead(config_._.light_pin); }
+  bool light_enabled() { return digitalRead(LIGHT_PIN); }
 
   void loop() {
     if (state_._.magnet_engaged && !magnet_engaged()) {
@@ -116,12 +119,6 @@ public:
                light_enabled()) {
       _light_disable();
     }
-  }
-
-  bool on_config_light_pin_changed(uint32_t new_value) {
-    // Configure light pin as output.
-    pinMode(new_value, OUTPUT);
-    return true;
   }
 
   bool on_state_magnet_engaged_changed(bool new_value) {
@@ -145,8 +142,8 @@ public:
   // scraper/generator.
   void _magnet_engage() { servo_.write(config_._.engaged_angle); }
   void _magnet_disengage() { servo_.write(config_._.disengaged_angle); }
-  void _light_enable() { digitalWrite(config_._.light_pin, HIGH); }
-  void _light_disable() { digitalWrite(config_._.light_pin, LOW); }
+  void _light_enable() { digitalWrite(LIGHT_PIN, HIGH); }
+  void _light_disable() { digitalWrite(LIGHT_PIN, LOW); }
 };
 
 }  // namespace dropbot_dx
