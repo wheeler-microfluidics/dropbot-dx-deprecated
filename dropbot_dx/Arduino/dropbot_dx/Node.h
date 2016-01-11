@@ -56,7 +56,7 @@ public:
   static const uint16_t BUFFER_SIZE = 128;  // >= longest property string
 
   static const uint8_t SERVO_PIN = 7;
-  static const uint8_t LIGHT_PIN = 8;
+  static const uint8_t LIGHT_PIN = 5;
 
   uint8_t buffer_[BUFFER_SIZE];
   uint32_t tick_count_;
@@ -64,7 +64,7 @@ public:
   Servo servo_;
 
   Node() : BaseNode(), BaseNodeConfig<config_t>(dropbot_dx_Config_fields),
-           BaseNodeState<state_t>(dropbot_dx_State_fields) {}
+           BaseNodeState<state_t>(dropbot_dx_State_fields) { }
 
   UInt8Array get_buffer() { return UInt8Array_init(sizeof(buffer_), buffer_); }
   /* This is a required method to provide a temporary buffer to the
@@ -97,34 +97,37 @@ public:
 
   bool magnet_engaged() { return servo_.read() == config_._.engaged_angle; }
 
-  bool light_enabled() { return digitalRead(LIGHT_PIN); }
-
   void loop() {
-    if (state_._.magnet_engaged && !magnet_engaged()) {
-      _magnet_engage();
-    } else if (!state_._.magnet_engaged && magnet_engaged()) {
-      _magnet_disengage();
-    }
-    if (state_._.light_enabled && !light_enabled()) {
-      _light_enable();
-    } else if (!state_._.light_enabled && light_enabled()) {
-      _light_disable();
-    }
   }
 
   bool on_state_magnet_engaged_changed(bool new_value) {
     /* Update magnet position based on updated setting. */
-    if (new_value) { _magnet_engage(); }
-    else { _magnet_disengage(); }
+    if (new_value) {
+      _magnet_engage();
+    } else {
+      _magnet_disengage();
+    }
     // Trigger update of `magnet_engaged` field in local state structure.
     return true;
   }
 
   bool on_state_light_enabled_changed(bool new_value) {
     /* Update state of light output based on updated setting. */
-    if (new_value) { _light_enable(); }
-    else { _light_disable(); }
-    // Trigger update of `light_enabled` field in local state structure.
+    if (new_value) {
+      _set_light_intensity(config_._.light_intensity);
+    } else {
+      _disable_light();
+    }
+    // Trigger update of `light_intensity` field in local state structure.
+    return true;
+  }
+
+  bool on_config_light_intensity_changed(float new_value) {
+    /* Update intensity of light output based on updated setting. */
+    if (state_._.light_enabled) {
+      _set_light_intensity(new_value);
+    }
+    // Trigger update of `light_intensity` field in local state structure.
     return true;
   }
 
@@ -133,8 +136,8 @@ public:
   // scraper/generator.
   void _magnet_engage() { servo_.write(config_._.engaged_angle); }
   void _magnet_disengage() { servo_.write(config_._.disengaged_angle); }
-  void _light_enable() { digitalWrite(LIGHT_PIN, HIGH); }
-  void _light_disable() { digitalWrite(LIGHT_PIN, LOW); }
+  void _set_light_intensity(float value) { analogWrite(LIGHT_PIN, value * 255.0); }
+  void _disable_light() { analogWrite(LIGHT_PIN, 0); }
 };
 
 }  // namespace dropbot_dx

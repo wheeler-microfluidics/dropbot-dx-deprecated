@@ -16,7 +16,8 @@ void Node::begin() {
   state_._.has_light_enabled = true;
   state_._.has_magnet_engaged = true;
   // Validate state to trigger on-changed handling for state fields that are
-  // set.
+  // set (which initializes the state to the default values supplied in the
+  // state protocol buffer definition).
   state_.validate();
   // Start Serial after loading config to set baud rate.
 #if !defined(DISABLE_SERIAL)
