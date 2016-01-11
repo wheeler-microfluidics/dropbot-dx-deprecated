@@ -5,7 +5,8 @@ try:
     from base_node_rpc.proxy import ConfigMixinBase, StateMixinBase
     from .node import (Proxy as _Proxy, I2cProxy as _I2cProxy,
                        SerialProxy as _SerialProxy)
-    from .config import Config, State
+    from .config import Config
+    from .state import State
 
 
     class ConfigMixin(ConfigMixinBase):

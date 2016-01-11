@@ -25,6 +25,7 @@
 #include "dropbot_dx_config_validate.h"
 #include "dropbot_dx_state_validate.h"
 #include "DropbotDx/config_pb.h"
+#include "DropbotDx/state_pb.h"
 
 
 namespace dropbot_dx {
