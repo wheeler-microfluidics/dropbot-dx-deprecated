@@ -55,9 +55,6 @@ public:
 
   static const uint16_t BUFFER_SIZE = 128;  // >= longest property string
 
-  // If light override pin is high, and `light_override_enabled`, light will be
-  // turned off regardless of the `light_enabled` state setting.
-  static const uint8_t LIGHT_OVERRIDE_PIN = 6;
   static const uint8_t SERVO_PIN = 7;
   static const uint8_t LIGHT_PIN = 8;
 
@@ -100,10 +97,6 @@ public:
 
   bool magnet_engaged() { return servo_.read() == config_._.engaged_angle; }
 
-  bool light_override() {
-    return (config_._.light_override_enabled &&
-            digitalRead(LIGHT_OVERRIDE_PIN));
-  }
   bool light_enabled() { return digitalRead(LIGHT_PIN); }
 
   void loop() {
@@ -112,12 +105,9 @@ public:
     } else if (!state_._.magnet_engaged && magnet_engaged()) {
       _magnet_disengage();
     }
-    // If light override is active, light will be turned off regardless of the
-    // `light_enabled` state setting.
-    if (state_._.light_enabled && !light_override() && !light_enabled()) {
+    if (state_._.light_enabled && !light_enabled()) {
       _light_enable();
-    } else if ((!state_._.light_enabled || light_override()) &&
-               light_enabled()) {
+    } else if (!state_._.light_enabled && light_enabled()) {
       _light_disable();
     }
   }

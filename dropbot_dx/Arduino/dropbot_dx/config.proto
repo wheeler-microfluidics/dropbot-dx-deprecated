@@ -23,7 +23,9 @@ message Config {
    */
   optional uint32 engaged_angle = 50 [default = 75];
   optional uint32 disengaged_angle = 51 [default = 103];
-  optional bool light_override_enabled = 52 [default = false];
+
+  // deprecated
+  // optional bool light_override_enabled = 52 [default = false];
 }
 
 
