@@ -29,7 +29,10 @@ try:
         host_package_name = str(path(__file__).parent.name.replace('_', '-'))
 
         def __del__(self):
-            self.update_state(light_enabled=False, magnet_engaged=False)
+            try:
+                self.update_state(light_enabled=False, magnet_engaged=False)
+            except IOError:
+                pass
             super(ProxyMixin, self).__del__()
 
 
