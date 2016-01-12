@@ -21,6 +21,7 @@ build/*
 .ipynb_checkpoints
 */node.py
 */config.py
+*/state.py 
 *~
 *.swp
 dropbot_dx/Arduino/dropbot_dx/NodeCommandProcessor.h
