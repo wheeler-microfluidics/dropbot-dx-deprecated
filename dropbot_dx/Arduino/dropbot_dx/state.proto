@@ -7,5 +7,5 @@ message State {
    * `update_state` method, but are *not* saved across device resets (i.e., are
    * only stored in RAM). */
   optional bool magnet_engaged = 1 [default = false];
-  optional bool light_enabled = 2 [default = true];
+  optional bool light_enabled = 2 [default = false];
 }
