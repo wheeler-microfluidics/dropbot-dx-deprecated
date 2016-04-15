@@ -24,7 +24,7 @@ void Node::begin() {
   Serial.begin(config_._.baud_rate);
 #endif  // #ifndef DISABLE_SERIAL
   // Set i2c clock-rate to 400kHz.
-  TWBR = 12;
+  Wire.setClock(400000);
 }
 
 
