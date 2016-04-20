@@ -66,12 +66,12 @@ try:
 
             # See URL from docstring for source of equations.
             relative_humidity = float(humidity_data & 0x03FFF) / ((1 << 14) - 2)
-            temperature_celcius = (float((temperature_data >> 2) & 0x3FFF) /
+            temperature_celsius = (float((temperature_data >> 2) & 0x3FFF) /
                                    ((1 << 14) - 2) * 165 - 40)
 
-            return pd.Series([relative_humidity, temperature_celcius],
+            return pd.Series([relative_humidity, temperature_celsius],
                              index=['relative_humidity',
-                                    'temperature_celcius'])
+                                    'temperature_celsius'])
 
     class Proxy(ProxyMixin, _Proxy):
         pass
