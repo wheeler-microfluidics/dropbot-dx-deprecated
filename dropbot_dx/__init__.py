@@ -1,14 +1,14 @@
 from collections import OrderedDict
 
 from path_helpers import path
+
+# Try/except needed to prevent import exceptions during package installation
 try:
-    import nadamq
     import base_node_rpc
     import arduino_servo
-    from .config import Config, State
+    from proxy import Proxy, I2cProxy, SerialProxy
 except (ImportError, TypeError):
     pass
-from proxy import Proxy, I2cProxy, SerialProxy
 
 
 def package_path():
