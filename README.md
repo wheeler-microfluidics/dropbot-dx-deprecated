@@ -1,4 +1,6 @@
-# dropbot-dx #
+# dropbot-dx-prototype#
+
+## Note: this package has been deprecated. Please see dropbot-dx package.
 
 Template package for remote procedure call (RPC) project, utilizing
 [`base-node-rpc`][3].
