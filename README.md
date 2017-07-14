@@ -1,3 +1,4 @@
+![https://ci.appveyor.com/api/projects/status/github/wheeler-microfluidics/dropbot-dx-deprecated?branch=master&svg=true](https://ci.appveyor.com/api/projects/status/github/wheeler-microfluidics/dropbot-dx-deprecated?branch=master&svg=true)
 # dropbot-dx-prototype#
 
 ## Note: this package has been deprecated. Please see dropbot-dx package.
